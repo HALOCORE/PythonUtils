@@ -2,6 +2,7 @@
 实用函数
 """
 import os
+import random
 import csv
 
 
@@ -156,3 +157,11 @@ def rows_to_dict(my_rows, data_type=str):
 
 
 
+def random_integers(low=1, high=10, count=100):
+    """
+    产生随机整数，输出到指定文件夹
+    """
+    # 产生随机数list
+    result = list()
+    for _ in range(0, count):
+        result.append(random.randint(low, high))

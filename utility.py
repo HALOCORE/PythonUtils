@@ -35,6 +35,8 @@ def write_lines_to_file(filename, data, debug=True):
     将数据列表写入文件
     """
     filename = get_abs_filename(filename)
+    filepath = get_path_in_filename(filename)
+    ensure_path(filepath)
     file = open(filename, 'w')
     write_data = [str(x) + "\n" for x in data]
     file.writelines(write_data)
@@ -42,13 +44,24 @@ def write_lines_to_file(filename, data, debug=True):
     file.close()
     if debug:
         print("# write_lines_to_file: 文件名 %s,  行数 %d. 写入完成。" % (filename, len(write_data)))
-    
+
+
+def append_a_csv_line_to_file(filename, data_list, debug=True):
+    """
+    将一个数据列表转为csv行添加到文件
+    """
+    str_list = [str(x) for x in data_list]
+    str_line = ', '.join(str_list)
+    append_lines_to_file(filename, [str_line], debug)
+
 
 def append_lines_to_file(filename, data, debug=True):
     """
     将行数据附加到文件后面
     """
     filename = get_abs_filename(filename)
+    filepath = get_path_in_filename(filename)
+    ensure_path(filepath)
     file = open(filename, 'a')
     write_data = [str(x) + "\n" for x in data]
     file.writelines(write_data)
@@ -62,7 +75,10 @@ def get_path_in_filename(filename):
     """
     从filename中分离出路径部分
     """
-    path_split = filename.split('/')
+    if filename.index('\\') > 0:
+        path_split = filename.split('\\')
+    else:
+        path_split = filename.split('/')
     path_split.pop()
     return '/'.join(path_split)
 
@@ -165,3 +181,23 @@ def random_integers(low=1, high=10, count=100):
     result = list()
     for _ in range(0, count):
         result.append(random.randint(low, high))
+    return result
+
+
+def convert_ints_to_str(int_list):
+    """
+    将整数列表转字符串
+    A=65 Z=90
+    """
+    result = ""
+    for x in int_list:
+        result += "%c" % (x)
+    return result
+
+
+def convert_str_to_ints(my_str):
+    """
+    将字符串转化为整形数组
+    """
+    result = [ord(x) for x in my_str]
+    return result

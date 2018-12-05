@@ -98,7 +98,7 @@ def check_sorted(input_list):
     """
     last_elem = input_list[0]
     for elem in input_list:
-        if elem < last_elem: 
+        if elem < last_elem:
             return False
         last_elem = elem
     return True
@@ -115,17 +115,17 @@ def check_consistent(input_list1, input_list2):
     inter = set1.intersection(set2)
     if len(input_list1) + len(input_list2) > 0 and len(inter) == 0:
         return False
-    dict1 = {x:0 for x in inter}
-    dict2 = {x:0 for x in inter}
-    for x in input_list1:
-        dict1[x] += 1
-    for x in input_list2:
-        dict2[x] += 1
+    dict1 = {keyx:0 for keyx in inter}
+    dict2 = {keyx:0 for keyx in inter}
+    for keyx in input_list1:
+        dict1[keyx] += 1
+    for keyx in input_list2:
+        dict2[keyx] += 1
     for key in inter:
         if dict1[key] != dict2[key]:
             return False
     return True
-    
+
 
 
 
@@ -190,8 +190,8 @@ def convert_ints_to_str(int_list):
     A=65 Z=90
     """
     result = ""
-    for x in int_list:
-        result += "%c" % (x)
+    for intx in int_list:
+        result += "%c" % (intx)
     return result
 
 

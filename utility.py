@@ -75,7 +75,7 @@ def get_path_in_filename(filename):
     """
     从filename中分离出路径部分
     """
-    if filename.index('\\') > 0:
+    if filename.find('\\') > 0:
         path_split = filename.split('\\')
     else:
         path_split = filename.split('/')

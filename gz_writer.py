@@ -16,9 +16,17 @@ class GzDigraphWriter:
         """在digraph上添加边"""
         self.__code_list.append(name1 + " -> " + name2 + ";")
 
-    def set_node(self, name, color="black"):
+    def set_node(self, name, color=None, label=None):
         """在digraph中设置节点颜色"""
-        code = name + " [color=" + color + "];"
+        attr_list = list()
+        color_code = "" if not color else "color=" + color
+        label_code = "" if not label else "label=\"" + label + "\""
+        attr_list.append(color_code)
+        attr_list.append(label_code)
+        attr_list = [attr for attr in attr_list if attr != ""]
+        code = ", ".join(attr_list)
+        code = " [" + code + "]" if code != "" else ""
+        code = name + code + ";"
         self.__code_list.append(code)
 
     def get_codes(self):

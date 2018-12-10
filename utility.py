@@ -201,3 +201,9 @@ def convert_str_to_ints(my_str):
     """
     result = [ord(x) for x in my_str]
     return result
+
+
+def list_minus_base(data: list):
+    """将一个列表都减去第一个元素"""
+    base = data[0]
+    return [x - base for x in data]

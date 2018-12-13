@@ -30,6 +30,17 @@ def get_lines_from_file(filename, debug=True):
     return lines
 
 
+def get_file_content(filename: str, debug=True):
+    """读取全部文件内容"""
+    filename = get_abs_filename(filename)
+    file = open(filename, 'r')
+    content = file.read()
+    if debug:
+        print("# get_file_content: 文件名 %s, 内容长度 %d. 读取完成。" % (filename, len(content)))
+    file.close()
+    return content
+
+
 def write_lines_to_file(filename, data, debug=True):
     """
     将数据列表写入文件
@@ -46,15 +57,6 @@ def write_lines_to_file(filename, data, debug=True):
         print("# write_lines_to_file: 文件名 %s,  行数 %d. 写入完成。" % (filename, len(write_data)))
 
 
-def append_a_csv_line_to_file(filename, data_list, debug=True):
-    """
-    将一个数据列表转为csv行添加到文件
-    """
-    str_list = [str(x) for x in data_list]
-    str_line = ', '.join(str_list)
-    append_lines_to_file(filename, [str_line], debug)
-
-
 def append_lines_to_file(filename, data, debug=True):
     """
     将行数据附加到文件后面
@@ -69,6 +71,33 @@ def append_lines_to_file(filename, data, debug=True):
     file.close()
     if debug:
         print("# append_lines_to_file: 文件名 %s,  添加行数 %d. 写入完成。" % (filename, len(write_data)))
+
+
+def write_csv_lines_to_file(filename, data, debug=True):
+    """
+    将数据列表写入文件
+    """
+    filename = get_abs_filename(filename)
+    filepath = get_path_in_filename(filename)
+    ensure_path(filepath)
+    file = open(filename, 'w')
+    write_data = [', '.join([str(t) for t in x]) + "\n" for x in data]
+    file.writelines(write_data)
+    file.flush()
+    file.close()
+    if debug:
+        print("# write_csv_lines_to_file: 文件名 %s,  行数 %d. 写入完成。" % (filename, len(write_data)))
+
+
+def append_a_csv_line_to_file(filename, data_list, debug=True):
+    """
+    将一个数据列表转为csv行添加到文件
+    """
+    str_list = [str(x) for x in data_list]
+    str_line = ', '.join(str_list)
+    append_lines_to_file(filename, [str_line], debug)
+
+
 
 
 def get_path_in_filename(filename):
@@ -127,8 +156,6 @@ def check_consistent(input_list1, input_list2):
     return True
 
 
-
-
 def write_csv(filename, head, rows):
     """
     写入CSV文件
@@ -181,6 +208,32 @@ def random_integers(low=1, high=10, count=100):
     result = list()
     for _ in range(0, count):
         result.append(random.randint(low, high))
+    return result
+
+
+def random_digitletter_charcodes(count=100, test_only=False):
+    """
+    产生随机的数字或者大小写字母的 ascii 码
+    """
+    # 26 + 26 + 10 = 62
+    if test_only:
+        # return random_integers(ord('a'), ord('a') + 25, count)
+        return random_integers(ord('0'), ord('0') + 5, count)
+    
+    rand_ints = random_integers(1, 62, count)
+    result = list()
+    error_flag = False
+    for rand_int in rand_ints:
+        if rand_int <= 26:
+            result.append(rand_int - 1 + ord('A'))
+        elif rand_int <= 52:
+            result.append(rand_int - 27 + ord('a'))
+        elif rand_int <= 62:
+            result.append(rand_int - 53 + ord('0'))
+        else:
+            error_flag = True
+    if error_flag:
+        print("# ERROR: random_digitletter_charcodes.")
     return result
 
 

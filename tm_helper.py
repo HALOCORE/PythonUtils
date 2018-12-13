@@ -42,11 +42,11 @@ def plot_time_graph(scales, real_times, theo_times, m_title,
     plt.show()
 
 
-def plot_single_graph(scales, real_times, m_title, m_xlabel="n", m_ylabel="time(s)"):
+def plot_single_graph(scales, real_times, m_title, m_xlabel="n", m_ylabel="time(s)", line_color='dodgerblue'):
     """
     绘制时间比较图像
     """
-    plt.plot(scales, real_times)
+    plt.plot(scales, real_times, color=line_color)
     # plt.legend(["real", "theory"], loc="right")
     plt.title(m_title)
     plt.xlabel(m_xlabel)

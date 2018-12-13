@@ -218,7 +218,7 @@ def random_digitletter_charcodes(count=100, test_only=False):
     # 26 + 26 + 10 = 62
     if test_only:
         # return random_integers(ord('a'), ord('a') + 25, count)
-        return random_integers(ord('0'), ord('0') + 5, count)
+        return random_integers(ord('A'), ord('A') + 5, count)
     
     rand_ints = random_integers(1, 62, count)
     result = list()
@@ -247,6 +247,15 @@ def convert_ints_to_str(int_list):
         result += "%c" % (intx)
     return result
 
+def parse_csv_line(csvline: str, converter):
+    """解析一个csv数据行，得到列表
+    csvline是数据行
+    converter是分割后转换函数
+    """
+    str_datas = csvline.split(',')
+    return [converter(x.strip()) for x in str_datas]
+
+    
 
 def convert_str_to_ints(my_str):
     """

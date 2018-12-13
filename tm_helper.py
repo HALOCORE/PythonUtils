@@ -6,7 +6,7 @@ def get_average_time_from_timetxt(filename):
     """
     从time.txt读取得到平均时间
     """
-    lines = utility.get_lines_from_file(filename)
+    lines = utility.get_lines_from_file(filename, debug=False)
     datas = [[float(x.strip()) for x in line.split(",")] for line in lines]
     avers = [sum(one)/len(one) for one in zip(*datas)]
     return avers
@@ -39,4 +39,17 @@ def plot_time_graph(scales, real_times, theo_times, m_title,
     plt.xlabel(m_xlabel)
     plt.ylabel(m_ylabel)
     plt.ylim(ymin=0)
+    plt.show()
+
+
+def plot_single_graph(scales, real_times, m_title, m_xlabel="n", m_ylabel="time(s)"):
+    """
+    绘制时间比较图像
+    """
+    plt.plot(scales, real_times)
+    # plt.legend(["real", "theory"], loc="right")
+    plt.title(m_title)
+    plt.xlabel(m_xlabel)
+    plt.ylabel(m_ylabel)
+    # plt.ylim(ymin=0)
     plt.show()
